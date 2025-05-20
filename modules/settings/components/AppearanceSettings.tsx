@@ -1,3 +1,6 @@
+'use client'
+
+import { useTheme } from 'next-themes'
 import {
     Card,
     CardContent,
@@ -14,7 +17,7 @@ import { Save, Moon, Sun, CheckCircle } from 'lucide-react'
 
 export function AppearanceSettings() {
     return (
-        <Card className="bg-gray-900 border-gray-800">
+        <Card>
             <CardHeader>
                 <CardTitle>Appearance Settings</CardTitle>
                 <CardDescription>
@@ -25,29 +28,24 @@ export function AppearanceSettings() {
                 {/* Theme */}
                 <ThemeSelector />
 
-                <Separator className="bg-gray-800" />
+                <Separator />
 
                 {/* Accent Color */}
                 <AccentColorSelector />
 
-                <Separator className="bg-gray-800" />
+                <Separator />
 
                 {/* Sidebar Options */}
                 <SidebarOptions />
 
-                <Separator className="bg-gray-800" />
+                <Separator />
 
                 {/* Font Size */}
                 <TextSizeSelector />
             </CardContent>
-            <CardFooter className="flex justify-between border-t border-gray-800 pt-5">
-                <Button
-                    variant="outline"
-                    className="border-gray-700 text-gray-300 hover:bg-gray-800"
-                >
-                    Reset to Defaults
-                </Button>
-                <Button className="bg-spotifyGreen hover:bg-spotifyGreen/90 text-black">
+            <CardFooter className="flex justify-between pt-5">
+                <Button variant="outline">Reset to Defaults</Button>
+                <Button>
                     <Save className="mr-2 h-4 w-4" /> Save Preferences
                 </Button>
             </CardFooter>
@@ -56,26 +54,63 @@ export function AppearanceSettings() {
 }
 
 function ThemeSelector() {
+    const { theme, setTheme } = useTheme()
+
     return (
         <div className="grid gap-4">
             <h3 className="text-sm font-medium">Theme</h3>
             <div className="grid grid-cols-3 gap-4">
-                <div className="flex flex-col items-center gap-2">
-                    <div className="relative w-full aspect-video bg-black rounded-md border-2 border-spotifyGreen flex items-center justify-center">
-                        <Moon className="h-5 w-5 text-white" />
-                        <CheckCircle className="absolute top-2 right-2 h-4 w-4 text-spotifyGreen" />
+                <div
+                    className="flex flex-col items-center gap-2 cursor-pointer"
+                    onClick={() => setTheme('dark')}
+                >
+                    <div
+                        className={`relative w-full aspect-video bg-background rounded-md border-2 ${
+                            theme === 'dark'
+                                ? 'border-primary'
+                                : 'border-border'
+                        } flex items-center justify-center`}
+                    >
+                        <Moon className="h-5 w-5 text-foreground" />
+                        {theme === 'dark' && (
+                            <CheckCircle className="absolute top-2 right-2 h-4 w-4 text-primary" />
+                        )}
                     </div>
                     <span className="text-sm">Dark</span>
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                    <div className="w-full aspect-video bg-white rounded-md border-2 border-gray-700 flex items-center justify-center">
+                <div
+                    className="flex flex-col items-center gap-2 cursor-pointer"
+                    onClick={() => setTheme('light')}
+                >
+                    <div
+                        className={`w-full aspect-video bg-white rounded-md border-2 ${
+                            theme === 'light'
+                                ? 'border-primary'
+                                : 'border-border'
+                        } flex items-center justify-center`}
+                    >
                         <Sun className="h-5 w-5 text-black" />
+                        {theme === 'light' && (
+                            <CheckCircle className="absolute top-2 right-2 h-4 w-4 text-primary" />
+                        )}
                     </div>
                     <span className="text-sm">Light</span>
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                    <div className="w-full aspect-video bg-gradient-to-r from-gray-900 to-black rounded-md border-2 border-gray-700 flex items-center justify-center">
-                        <Moon className="h-5 w-5 text-white" />
+                <div
+                    className="flex flex-col items-center gap-2 cursor-pointer"
+                    onClick={() => setTheme('system')}
+                >
+                    <div
+                        className={`w-full aspect-video bg-gradient-to-r from-background to-card rounded-md border-2 ${
+                            theme === 'system'
+                                ? 'border-primary'
+                                : 'border-border'
+                        } flex items-center justify-center`}
+                    >
+                        <Moon className="h-5 w-5 text-foreground" />
+                        {theme === 'system' && (
+                            <CheckCircle className="absolute top-2 right-2 h-4 w-4 text-primary" />
+                        )}
                     </div>
                     <span className="text-sm">System</span>
                 </div>
@@ -90,25 +125,25 @@ function AccentColorSelector() {
             <h3 className="text-sm font-medium">Accent Color</h3>
             <div className="grid grid-cols-5 gap-4">
                 <div className="flex flex-col items-center gap-2">
-                    <div className="relative w-8 h-8 rounded-full bg-spotifyGreen border-2 border-white flex items-center justify-center">
-                        <CheckCircle className="h-4 w-4 text-black" />
+                    <div className="relative w-8 h-8 rounded-full bg-primary border-2 border-border flex items-center justify-center">
+                        <CheckCircle className="h-4 w-4 text-primary-foreground" />
                     </div>
-                    <span className="text-xs">Spotify</span>
+                    <span className="text-xs">Default</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-purple-500 border-2 border-gray-700"></div>
+                    <div className="w-8 h-8 rounded-full bg-purple-500 border-2 border-border"></div>
                     <span className="text-xs">Purple</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-gray-700"></div>
+                    <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-border"></div>
                     <span className="text-xs">Blue</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-red-500 border-2 border-gray-700"></div>
+                    <div className="w-8 h-8 rounded-full bg-red-500 border-2 border-border"></div>
                     <span className="text-xs">Red</span>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-amber-500 border-2 border-gray-700"></div>
+                    <div className="w-8 h-8 rounded-full bg-amber-500 border-2 border-border"></div>
                     <span className="text-xs">Amber</span>
                 </div>
             </div>
@@ -126,7 +161,7 @@ function SidebarOptions() {
                         <Label htmlFor="sidebar-compact" className="text-sm">
                             Compact Mode
                         </Label>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-muted-foreground">
                             Show icons only in sidebar when collapsed
                         </p>
                     </div>
@@ -137,7 +172,7 @@ function SidebarOptions() {
                         <Label htmlFor="sidebar-labels" className="text-sm">
                             Always Show Labels
                         </Label>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-muted-foreground">
                             Keep text labels visible even in compact mode
                         </p>
                     </div>
@@ -162,7 +197,7 @@ function TextSizeSelector() {
                     min="1"
                     max="5"
                     defaultValue="3"
-                    className="w-full accent-spotifyGreen bg-gray-700 h-2 rounded-lg appearance-none"
+                    className="w-full h-2 rounded-lg appearance-none"
                 />
             </div>
         </div>

@@ -19,10 +19,10 @@ export default function SettingsPage() {
             </div>
 
             <Tabs defaultValue="profile" className="space-y-4">
-                <TabsList className="bg-gray-800">
+                <TabsList>
                     <TabsTrigger
                         value="profile"
-                        className="flex items-center gap-2"
+                        className="flex items-center gap-2 "
                     >
                         <User size={16} /> Profile
                     </TabsTrigger>

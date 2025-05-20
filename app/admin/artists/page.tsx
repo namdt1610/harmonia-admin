@@ -1,11 +1,12 @@
-import ArtistForm from '@/modules/artists/components/ArtistForm'
-import ArtistTable from '@/modules/artists/components/ArtistTable'
+'use client'
+import ArtistCreateModal from '@/modules/artists/components/ArtistCreateModal'
+import ArtistDataTable from '@/modules/artists/components/ArtistDataTable'
 
 export default function ArtistsPage() {
-  return (
-    <div className="space-y-8">
-      <ArtistForm />
-      <ArtistTable />
-    </div>
-  )
+    return (
+        <div className="space-y-8">
+            <ArtistCreateModal />
+            <ArtistDataTable />
+        </div>
+    )
 }

@@ -2,36 +2,44 @@ export interface Artist {
     id: number
     name: string
     bio?: string
-    avatar?: string // URL của ảnh đại diện
+    avatar?: string 
+    created_at: string 
+    updated_at: string 
 }
 
 export interface Album {
     id: number
     title: string
-    name: string
-    artist: Artist // Tham chiếu đến Artist
-    release_date: string // YYYY-MM-DD
-    cover?: string // URL của ảnh bìa album
+    artist: Artist 
+    release_date: string 
+    cover?: string 
+    created_at: string 
+    updated_at: string 
 }
 
 export interface Track {
     id: number
     title: string
-    album?: Album | null // Có thể null nếu track không thuộc album nào
-    artist: Artist // Tham chiếu đến Artist
-    file: string // URL file nhạc
-    cover?: string // URL của ảnh bìa track
-    lyrics?: string // Lời bài hát
-    duration: number // Thời gian (giây)
-    created_at: string // Timestamp
+    album?: Album | null
+    artist: Artist
+    file: string
+    cover?: string
+    lyrics?: string
+    duration: number
+    created_at: string
+    updated_at: string
 }
 
 export interface Playlist {
     id: number
-    user: User // ID user sở hữu playlist
-    name: string
-    tracks: Track[] // Danh sách track trong playlist
-    created_at: string // Timestamp
+    user: User
+    title: string
+    description?: string
+    cover?: string
+    tracks: Track[]
+    followers: number
+    created_at: string
+    updated_at: string
 }
 
 export interface User {
@@ -41,20 +49,63 @@ export interface User {
     status: string
     email: string
     password: string
-    avatar?: string // URL của ảnh đại diện
-    playlists: Playlist[] // Danh sách playlist của user
-    liked_tracks: Track[] // Danh sách track được thích
-    created_at: string // Timestamp
-    updated_at: string // Timestamp
-    type: string // "admin" hoặc "user"
-    country: string // Quốc gia của user
+    avatar?: string
+    playlists: Playlist[]
+    liked_tracks: Track[]
+    created_at: string
+    updated_at: string
+    type: string
+    country: string
 }
 
 export interface AuthUser {
-  id: number
-  username: string
-  email: string
-  is_superuser: boolean
+    id: number
+    username: string
+    email: string
+    is_superuser: boolean
+}
+
+// Analytics Types
+export interface DashboardStats {
+    totalArtists: number
+    totalAlbums: number
+    totalTracks: number
+    totalPlaylists: number
+    totalUsers: number
+    totalPlays: number
+    recentTracks: {
+        id: number
+        title: string
+        artist: string
+        plays: number
+    }[]
+    topArtists: {
+        id: number
+        name: string
+        plays: number
+    }[]
+    topAlbums: {
+        id: number
+        title: string
+        artist: string
+        plays: number
+    }[]
+    topPlaylists: {
+        id: number
+        title: string
+        followers: number
+    }[]
+}
+
+export interface PlayStats {
+    date: string
+    plays: number
+}
+
+export interface UserStats {
+    date: string
+    newUsers: number
+    activeUsers: number
 }
 
 export interface AnalyticsOverview {
@@ -62,5 +113,12 @@ export interface AnalyticsOverview {
     totalTracks: number
     totalAlbums: number
     totalPlaylists: number
-    // ...other stats
+    totalArtists: number
+    totalPlays: number
+    recentActivity: {
+        type: 'track' | 'album' | 'playlist' | 'user'
+        id: number
+        title: string
+        timestamp: string
+    }[]
 }

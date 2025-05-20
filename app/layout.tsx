@@ -1,10 +1,16 @@
-import type { Metadata } from 'next'
+'use client'
+
 import { Geist, Geist_Mono } from 'next/font/google'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { Loading } from '@/components/ui/loading'
+import { Toaster } from 'sonner'
 import Sidebar from '@/components/shared/Sidebar'
 import Header from '@/components/shared/Header'
 import './globals.css'
 import ClientProvider from '@/libs/provider'
-import { Toaster } from 'sonner'
+import { Providers } from '@/providers'
+import { cn } from '@/lib/utils'
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -16,38 +22,59 @@ const geistMono = Geist_Mono({
     subsets: ['latin'],
 })
 
-export const metadata: Metadata = {
-    title: 'Spotify Admin Panel',
-    description: 'Management dashboard for Spotify administrators',
-    icons: {
-        icon: '/favicon.ico',
-    },
-}
-
 export default function RootLayout({
     children,
-}: Readonly<{
+}: {
     children: React.ReactNode
-}>) {
+}) {
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+    const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        const handleStart = () => {
+            setIsLoading(true)
+        }
+
+        const handleStop = () => {
+            setIsLoading(false)
+        }
+
+        window.addEventListener('beforeunload', handleStart)
+        window.addEventListener('load', handleStop)
+
+        return () => {
+            window.removeEventListener('beforeunload', handleStart)
+            window.removeEventListener('load', handleStop)
+        }
+    }, [])
+
+    useEffect(() => {
+        setIsLoading(false)
+    }, [pathname, searchParams])
+
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="vi" suppressHydrationWarning>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}
+                className={cn(
+                    geistSans.variable,
+                    geistMono.variable,
+                    'min-h-screen bg-background'
+                )}
             >
-                <ClientProvider>
-                    <Toaster/>
-                    <div className="flex h-screen overflow-hidden">
-                        <Sidebar />
-                        <div className="flex flex-col flex-1">
-                            <Header />
-                            <main className="flex-1 overflow-y-auto p-6 bg-gradient-to-b from-spotifyGray to-black">
-                                <div className="container mx-auto max-w-7xl">
-                                    {children}
-                                </div>
-                            </main>
+                <Providers>
+                    <ClientProvider>
+                        <Toaster />
+                        <div className="flex min-h-screen">
+                            <Sidebar />
+                            <div className="flex-1">
+                                <Header />
+                                <main className="p-6">{children}</main>
+                            </div>
                         </div>
-                    </div>
-                </ClientProvider>
+                        {isLoading && <Loading />}
+                    </ClientProvider>
+                </Providers>
             </body>
         </html>
     )

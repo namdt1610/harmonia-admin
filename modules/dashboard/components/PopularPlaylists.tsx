@@ -17,12 +17,12 @@ export function PopularPlaylists() {
     }))
 
     return (
-        <Card className="bg-gray-900 border-gray-800">
+        <Card>
             <CardHeader>
                 <CardTitle className="text-lg font-medium">
                     Popular Playlists
                 </CardTitle>
-                <CardDescription className="text-gray-400">
+                <CardDescription>
                     Most followed playlists this month
                 </CardDescription>
             </CardHeader>
@@ -31,23 +31,23 @@ export function PopularPlaylists() {
                     {playlists.map((playlist) => (
                         <div
                             key={playlist.id}
-                            className="bg-gray-800 rounded-lg overflow-hidden group hover:bg-gray-700 transition-colors"
+                            className=" rounded-lg overflow-hidden group  transition-colors"
                         >
-                            <div className="relative aspect-square bg-gray-800 flex items-center justify-center">
-                                <ListMusic className="h-10 w-10 text-spotifyGreen" />
-                                <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                            <div className="relative aspect-square  flex items-center justify-center">
+                                <ListMusic className="h-10 w-10 " />
+                                <div className="absolute inset-0  bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                                     <Button
                                         size="sm"
                                         variant="default"
-                                        className="bg-spotifyGreen hover:bg-spotifyGreen/90 rounded-full h-10 w-10 p-0"
+                                        className=" rounded-full h-10 w-10 p-0"
                                     >
-                                        <PlusCircle className="h-5 w-5 text-black" />
+                                        <PlusCircle className="h-5 w-5 " />
                                     </Button>
                                 </div>
                             </div>
                             <div className="p-3">
                                 <h4 className="font-medium">{playlist.name}</h4>
-                                <p className="text-xs text-gray-400 mt-1">
+                                <p className="text-xs  mt-1">
                                     {playlist.tracks} tracks •{' '}
                                     {playlist.followers}k followers
                                 </p>

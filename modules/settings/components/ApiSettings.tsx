@@ -15,11 +15,11 @@ import { Plus, Save, RefreshCw } from 'lucide-react'
 
 export function ApiSettings() {
     return (
-        <Card className="bg-gray-900 border-gray-800">
+        <Card>
             <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                     <span>API Keys & Developer Settings</span>
-                    <Button className="bg-spotifyGreen hover:bg-spotifyGreen/90 text-black">
+                    <Button>
                         <Plus className="mr-2 h-4 w-4" /> Generate New Key
                     </Button>
                 </CardTitle>
@@ -30,12 +30,12 @@ export function ApiSettings() {
             <CardContent className="space-y-6">
                 <ApiKeysTable />
 
-                <Separator className="bg-gray-800" />
+                <Separator />
 
                 <WebhookSettings />
             </CardContent>
-            <CardFooter className="flex justify-end border-t border-gray-800 pt-5">
-                <Button className="bg-spotifyGreen hover:bg-spotifyGreen/90 text-black">
+            <CardFooter className="flex justify-end pt-5">
+                <Button>
                     <Save className="mr-2 h-4 w-4" /> Save API Settings
                 </Button>
             </CardFooter>
@@ -48,48 +48,51 @@ function ApiKeysTable() {
         <div className="overflow-auto">
             <table className="w-full">
                 <thead>
-                    <tr className="border-b border-gray-800">
-                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-400">
+                    <tr>
+                        <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                             Key Name
                         </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-400">
+                        <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                             API Key
                         </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-400">
+                        <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                             Created
                         </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-400">
+                        <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                             Last Used
                         </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-400">
+                        <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                             Status
                         </th>
-                        <th className="text-right py-3 px-4 text-sm font-medium text-gray-400">
+                        <th className="text-right py-3 px-4 text-sm font-medium text-muted-foreground">
                             Actions
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="border-b border-gray-800">
+                    <tr>
                         <td className="py-3 px-4">
                             <div className="font-medium">Main API Key</div>
-                            <div className="text-xs text-gray-400">
+                            <div className="text-xs text-muted-foreground">
                                 Production use
                             </div>
                         </td>
                         <td className="py-3 px-4">
-                            <code className="text-xs bg-gray-800 p-1 rounded">
+                            <code className="text-xs p-1 rounded">
                                 ••••••••••••••••8f92
                             </code>
                         </td>
-                        <td className="py-3 px-4 text-sm text-gray-400">
+                        <td className="py-3 px-4 text-sm text-muted-foreground">
                             2023-09-15
                         </td>
-                        <td className="py-3 px-4 text-sm text-gray-400">
+                        <td className="py-3 px-4 text-sm text-muted-foreground">
                             Today
                         </td>
                         <td className="py-3 px-4">
-                            <Badge className="bg-green-500/20 text-green-500 hover:bg-green-500/20">
+                            <Badge
+                                variant="outline"
+                                className="text-green-500 bg-green-500/10"
+                            >
                                 Active
                             </Badge>
                         </td>
@@ -98,15 +101,15 @@ function ApiKeysTable() {
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    className="h-8 border-gray-700 text-gray-300 hover:bg-gray-800"
+                                    className="h-8"
                                 >
-                                    <RefreshCw className="h-3 w-3 mr-1" />{' '}
+                                    <RefreshCw className="h-3 w-3 mr-1" />
                                     Rotate
                                 </Button>
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    className="h-8 border-gray-700 text-red-500 hover:bg-gray-800"
+                                    className="h-8 text-destructive"
                                 >
                                     Revoke
                                 </Button>
@@ -118,23 +121,26 @@ function ApiKeysTable() {
                             <div className="font-medium">
                                 Development API Key
                             </div>
-                            <div className="text-xs text-gray-400">
+                            <div className="text-xs text-muted-foreground">
                                 Local testing
                             </div>
                         </td>
                         <td className="py-3 px-4">
-                            <code className="text-xs bg-gray-800 p-1 rounded">
+                            <code className="text-xs bg-muted p-1 rounded">
                                 ••••••••••••••••3a7b
                             </code>
                         </td>
-                        <td className="py-3 px-4 text-sm text-gray-400">
+                        <td className="py-3 px-4 text-sm text-muted-foreground">
                             2023-10-03
                         </td>
-                        <td className="py-3 px-4 text-sm text-gray-400">
+                        <td className="py-3 px-4 text-sm text-muted-foreground">
                             3 days ago
                         </td>
                         <td className="py-3 px-4">
-                            <Badge className="bg-green-500/20 text-green-500 hover:bg-green-500/20">
+                            <Badge
+                                variant="outline"
+                                className="text-green-500 bg-green-500/10"
+                            >
                                 Active
                             </Badge>
                         </td>
@@ -143,15 +149,15 @@ function ApiKeysTable() {
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    className="h-8 border-gray-700 text-gray-300 hover:bg-gray-800"
+                                    className="h-8"
                                 >
-                                    <RefreshCw className="h-3 w-3 mr-1" />{' '}
+                                    <RefreshCw className="h-3 w-3 mr-1" />
                                     Rotate
                                 </Button>
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    className="h-8 border-gray-700 text-red-500 hover:bg-gray-800"
+                                    className="h-8 text-destructive"
                                 >
                                     Revoke
                                 </Button>
@@ -175,11 +181,9 @@ function WebhookSettings() {
                         <Input
                             id="webhook-url"
                             placeholder="https://your-app.com/webhook"
-                            className="flex-1 bg-gray-800 border-gray-700 focus:border-spotifyGreen text-white"
+                            className="flex-1"
                         />
-                        <Button className="bg-gray-800 hover:bg-gray-700 text-gray-300">
-                            Test
-                        </Button>
+                        <Button variant="secondary">Test</Button>
                     </div>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -191,7 +195,7 @@ function WebhookSettings() {
                                     type="checkbox"
                                     id="event-users"
                                     defaultChecked
-                                    className="rounded bg-gray-700 border-gray-600 text-spotifyGreen focus:ring-spotifyGreen mr-2"
+                                    className="rounded mr-2"
                                 />
                                 <Label
                                     htmlFor="event-users"
@@ -205,7 +209,7 @@ function WebhookSettings() {
                                     type="checkbox"
                                     id="event-content"
                                     defaultChecked
-                                    className="rounded bg-gray-700 border-gray-600 text-spotifyGreen focus:ring-spotifyGreen mr-2"
+                                    className="rounded mr-2"
                                 />
                                 <Label
                                     htmlFor="event-content"
@@ -218,7 +222,7 @@ function WebhookSettings() {
                                 <input
                                     type="checkbox"
                                     id="event-system"
-                                    className="rounded bg-gray-700 border-gray-600 text-spotifyGreen focus:ring-spotifyGreen mr-2"
+                                    className="rounded mr-2"
                                 />
                                 <Label
                                     htmlFor="event-system"
@@ -236,9 +240,9 @@ function WebhookSettings() {
                                 id="webhook-secret"
                                 type="password"
                                 defaultValue="your-secret-key"
-                                className="flex-1 bg-gray-800 border-gray-700 focus:border-spotifyGreen text-white"
+                                className="flex-1"
                             />
-                            <Button className="bg-gray-800 hover:bg-gray-700 text-gray-300">
+                            <Button variant="secondary">
                                 <RefreshCw className="h-4 w-4" />
                             </Button>
                         </div>

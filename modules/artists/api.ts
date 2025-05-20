@@ -12,10 +12,11 @@ export const artistApi = createApi({
         }),
         getArtist: builder.query<Artist, number>({
             query: (id) => `artists/${id}/`,
+            providesTags: ['Artist'],
         }),
         createArtist: builder.mutation<Artist, Partial<Artist>>({
             query: (body) => ({ url: 'artists/', method: 'POST', body }),
-            invalidatesTags: [{ type: 'Artist', id: 'LIST' }],
+            invalidatesTags: ['Artist'],
         }),
         updateArtist: builder.mutation<
             Artist,
@@ -26,9 +27,19 @@ export const artistApi = createApi({
                 method: 'PUT',
                 body: data,
             }),
-            invalidatesTags: (result, error, { id }) => [
-                { type: 'Artist', id },
-            ],
+            invalidatesTags: ['Artist'],
+        }),
+        uploadAvatar: builder.mutation<Artist, { id: number; file: File }>({
+            query: ({ id, file }) => {
+                const formData = new FormData()
+                formData.append('avatar', file)
+                return {
+                    url: `artists/${id}/upload-avatar/`,
+                    method: 'POST',
+                    body: formData,
+                }
+            },
+            invalidatesTags: ['Artist'],
         }),
         deleteArtist: builder.mutation<void, number>({
             query: (id) => ({ url: `artists/${id}/`, method: 'DELETE' }),
@@ -42,5 +53,6 @@ export const {
     useGetArtistQuery,
     useCreateArtistMutation,
     useUpdateArtistMutation,
+    useUploadAvatarMutation,
     useDeleteArtistMutation,
 } = artistApi

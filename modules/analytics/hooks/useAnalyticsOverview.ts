@@ -1,3 +1,4 @@
+'use client'
 import { useGetOverviewQuery } from '../api'
 
 export function useAnalyticsOverview() {

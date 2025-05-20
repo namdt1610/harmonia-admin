@@ -3,19 +3,23 @@ import type { Album } from '@/types'
 
 export const albumApi = createApi({
     reducerPath: 'albumApi',
-    baseQuery: fetchBaseQuery({ baseUrl: '/api/admin/' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
     tagTypes: ['Album'],
     endpoints: (builder) => ({
-        getAlbums: builder.query<Album[], void>({ query: () => 'albums/' }),
+        getAlbums: builder.query<Album[], void>({
+            query: () => 'albums/',
+            providesTags: ['Album'],
+        }),
         getAlbum: builder.query<Album, number>({
             query: (id) => `albums/${id}/`,
+            providesTags: ['Album'],
         }),
         getAlbumsByArtist: builder.query<Album[], number>({
             query: (artistId) => `albums/?artist=${artistId}`,
         }),
         createAlbum: builder.mutation<Album, Partial<Album>>({
             query: (body) => ({ url: 'albums/', method: 'POST', body }),
-            invalidatesTags: [{ type: 'Album', id: 'LIST' }],
+            invalidatesTags: ['Album'],
         }),
         updateAlbum: builder.mutation<
             Album,
@@ -26,11 +30,23 @@ export const albumApi = createApi({
                 method: 'PUT',
                 body: data,
             }),
-            invalidatesTags: (result, error, { id }) => [{ type: 'Album', id }],
+            invalidatesTags: ['Album'],
+        }),
+        uploadCover: builder.mutation<Album, { id: number; file: File }>({
+            query: ({ id, file }) => {
+                const formData = new FormData()
+                formData.append('cover', file)
+                return {
+                    url: `albums/${id}/upload-cover/`,
+                    method: 'POST',
+                    body: formData,
+                }
+            },
+            invalidatesTags: ['Album'],
         }),
         deleteAlbum: builder.mutation<void, number>({
             query: (id) => ({ url: `albums/${id}/`, method: 'DELETE' }),
-            invalidatesTags: (result, error, id) => [{ type: 'Album', id }],
+            invalidatesTags: ['Album'],
         }),
     }),
 })
@@ -41,5 +57,6 @@ export const {
     useGetAlbumsByArtistQuery,
     useCreateAlbumMutation,
     useUpdateAlbumMutation,
+    useUploadCoverMutation,
     useDeleteAlbumMutation,
 } = albumApi

@@ -3,7 +3,10 @@ import type { Track } from '@/types'
 
 export const trackApi = createApi({
     reducerPath: 'trackApi',
-    baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: process.env.NEXT_PUBLIC_API_URL,
+        credentials: 'include',
+    }),
     tagTypes: ['Track'],
     endpoints: (builder) => ({
         getTracks: builder.query<Track[], void>({
@@ -11,10 +14,11 @@ export const trackApi = createApi({
             providesTags: ['Track'],
         }),
         getTrack: builder.query<Track, number>({
-            query: (id) => `/tracks/${id}/`,
+            query: (id) => `tracks/${id}/`,
+            providesTags: ['Track'],
         }),
         createTrack: builder.mutation<Track, Partial<Track>>({
-            query: (body) => ({ url: '/tracks/', method: 'POST', body }),
+            query: (body) => ({ url: 'tracks/', method: 'POST', body }),
             invalidatesTags: ['Track'],
         }),
         updateTrack: builder.mutation<
@@ -22,15 +26,27 @@ export const trackApi = createApi({
             { id: number; data: Partial<Track> }
         >({
             query: ({ id, data }) => ({
-                url: `/tracks/${id}/`,
+                url: `tracks/${id}/`,
                 method: 'PUT',
                 body: data,
             }),
-            invalidatesTags: (result, error, { id }) => [{ type: 'Track', id }],
+            invalidatesTags: ['Track'],
+        }),
+        uploadCover: builder.mutation<Track, { id: number; file: File }>({
+            query: ({ id, file }) => {
+                const formData = new FormData()
+                formData.append('cover', file)
+                return {
+                    url: `tracks/${id}/upload-cover/`,
+                    method: 'POST',
+                    body: formData,
+                }
+            },
+            invalidatesTags: ['Track'],
         }),
         deleteTrack: builder.mutation<void, number>({
-            query: (id) => ({ url: `/tracks/${id}/`, method: 'DELETE' }),
-            invalidatesTags: (result, error, id) => [{ type: 'Track', id }],
+            query: (id) => ({ url: `tracks/${id}/`, method: 'DELETE' }),
+            invalidatesTags: ['Track'],
         }),
     }),
 })
@@ -40,5 +56,6 @@ export const {
     useGetTrackQuery,
     useCreateTrackMutation,
     useUpdateTrackMutation,
+    useUploadCoverMutation,
     useDeleteTrackMutation,
 } = trackApi

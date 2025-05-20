@@ -8,7 +8,7 @@ import {
 
 export function AnalyticsPlaceholder() {
     return (
-        <Card className="bg-gray-900 border-gray-800">
+        <Card>
             <CardHeader>
                 <CardTitle>Analytics Content</CardTitle>
                 <CardDescription>
@@ -16,10 +16,8 @@ export function AnalyticsPlaceholder() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="h-[400px] flex items-center justify-center border border-dashed border-gray-700 rounded-lg">
-                    <p className="text-gray-400">
-                        Analytics charts and graphs will be displayed here
-                    </p>
+                <div className="h-[400px] flex items-center justify-center border border-dashed  rounded-lg">
+                    <p>Analytics charts and graphs will be displayed here</p>
                 </div>
             </CardContent>
         </Card>
