@@ -88,6 +88,12 @@ export const columns: ColumnDef<User>[] = [
         enableHiding: false,
     },
     {
+        accessorKey: 'id',
+        header: ({ column }: { column: Column<User> }) => (
+            <DataTableColumnHeader column={column} title="ID" />
+        ),
+    },
+    {
         accessorKey: 'avatar',
         header: ({ column }: { column: Column<User> }) => (
             <DataTableColumnHeader column={column} title="Ảnh đại diện" />

@@ -27,7 +27,7 @@ export const trackApi = createApi({
         >({
             query: ({ id, data }) => ({
                 url: `tracks/${id}/`,
-                method: 'PUT',
+                method: 'PATCH',
                 body: data,
             }),
             invalidatesTags: ['Track'],

@@ -34,11 +34,11 @@ export const columns: ColumnDef<Track>[] = [
         },
     },
     {
-        accessorKey: 'artist',
+        accessorKey: 'artist_name',
         header: 'Nghệ sĩ',
         cell: ({ row }) => {
-            const artist = row.original.artist
-            return <div>{artist.name}</div>
+            const artist = row.original.artist_name
+            return <div>{artist}</div>
         },
     },
     {

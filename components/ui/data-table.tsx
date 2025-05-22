@@ -12,10 +12,11 @@ import {
     SortingState,
     VisibilityState,
     ColumnFiltersState,
+    Table,
 } from '@tanstack/react-table'
 
 import {
-    Table,
+    Table as UITable,
     TableBody,
     TableCell,
     TableHead,
@@ -26,11 +27,13 @@ import {
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    table?: Table<TData>
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    table: externalTable,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -39,7 +42,7 @@ export function DataTable<TData, TValue>({
     )
     const [rowSelection, setRowSelection] = useState({})
 
-    const table = useReactTable({
+    const internalTable = useReactTable({
         data,
         columns,
         onSortingChange: setSorting,
@@ -58,9 +61,11 @@ export function DataTable<TData, TValue>({
         },
     })
 
+    const table = externalTable || internalTable
+
     return (
         <div className="rounded-md border">
-            <Table>
+            <UITable>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
@@ -108,7 +113,7 @@ export function DataTable<TData, TValue>({
                         </TableRow>
                     )}
                 </TableBody>
-            </Table>
+            </UITable>
         </div>
     )
 }

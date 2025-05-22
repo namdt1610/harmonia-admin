@@ -22,6 +22,7 @@ export interface Track {
     title: string
     album?: Album | null
     artist: Artist
+    artist_name: string
     file: string
     cover?: string
     lyrics?: string

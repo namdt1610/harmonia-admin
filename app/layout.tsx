@@ -11,7 +11,7 @@ import './globals.css'
 import ClientProvider from '@/libs/provider'
 import { Providers } from '@/providers'
 import { cn } from '@/lib/utils'
-
+import { AuthBootstrap } from '@/modules/auth/components/AuthBootstrap'
 const geistSans = Geist({
     variable: '--font-geist-sans',
     subsets: ['latin'],
@@ -68,6 +68,7 @@ export default function RootLayout({
                         <div className="flex min-h-screen">
                             <Sidebar />
                             <div className="flex-1">
+                                <AuthBootstrap />
                                 <Header />
                                 <main className="p-6">{children}</main>
                             </div>
