@@ -1,6 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { Album } from '@/types'
 
+interface UpdateAlbumData {
+    title: string
+    release_date: string
+    artist: number
+}
+
 export const albumApi = createApi({
     reducerPath: 'albumApi',
     baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
@@ -23,7 +29,7 @@ export const albumApi = createApi({
         }),
         updateAlbum: builder.mutation<
             Album,
-            { id: number; data: Partial<Album> }
+            { id: number; data: UpdateAlbumData }
         >({
             query: ({ id, data }) => ({
                 url: `albums/${id}/`,
