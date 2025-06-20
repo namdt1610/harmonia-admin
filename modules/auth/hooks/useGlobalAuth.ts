@@ -6,7 +6,10 @@ import { useGetMeQuery } from '@/modules/auth/api'
 // This hook is used to set the user and access token in the Redux store
 export function useGlobalAuth() {
     const dispatch = useDispatch()
-    const { data: user, error } = useGetMeQuery()
+    const { data: user, error } = useGetMeQuery(undefined, {
+        // Only fetch if we have a token
+        skip: !document.cookie.includes('access_token'),
+    })
 
     useEffect(() => {
         if (user) {
